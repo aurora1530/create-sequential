@@ -20,7 +20,7 @@ export default function CreateSequential() {
 
   useEffect(() => {
     const serialNumbers = createSequentialTexts(text, { start, stop, step });
-    setFormatted(serialNumbers.join('\n'));
+    setFormatted(serialNumbers.join(lineBreak));
   }, [text, start, stop, step, lineBreak]);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function CreateSequential() {
           className="p-2 border border-gray-300 rounded-md"
         />
         <label htmlFor="lineBreak" className="block mt-4">
-          改行コード
+          改行コード（機能していないかも）
         </label>
         <select
           onChange={handleLineBreakChange}
