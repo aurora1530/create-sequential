@@ -12,6 +12,15 @@ export default function CreateSequential() {
   const [lineBreak, setLineBreak] = useState<string>('\n');
   const [formatted, setFormatted] = useState<string>('');
 
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if ((e.target.value.match(/%d/g) || []).length > 6) {
+      alert('%dの数が多すぎます。処理に時間がかかる可能性があります。');
+    }
+    setText(e.target.value);
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
+  };
+
   const handleLineBreakChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLineBreak(
       e.target.value === 'LF' ? '\n' : e.target.value === 'CR' ? '\r' : '\r\n'
@@ -37,11 +46,7 @@ export default function CreateSequential() {
       </label>
       <div>
         <textarea
-          onChange={(e) => {
-            setText(e.target.value);
-            e.target.style.height = 'auto';
-            e.target.style.height = e.target.scrollHeight + 'px';
-          }}
+          onChange={handleTextChange}
           className="w-full p-2 border border-gray-300 rounded-md"
         />
         <label htmlFor="start" className="block mt-4">
