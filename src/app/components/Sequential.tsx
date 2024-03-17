@@ -37,7 +37,11 @@ export default function CreateSequential() {
       </label>
       <div>
         <textarea
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {
+            setText(e.target.value);
+            e.target.style.height = 'auto';
+            e.target.style.height = e.target.scrollHeight + 'px';
+          }}
           className="w-full p-2 border border-gray-300 rounded-md"
         />
         <label htmlFor="start" className="block mt-4">
