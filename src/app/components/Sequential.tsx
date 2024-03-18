@@ -28,6 +28,12 @@ export default function CreateSequential() {
   };
 
   useEffect(() => {
+    const outputTextNum = (text.match(/%d/g)?.length ?? 1) * ((stop - start) / step + 1);
+    if (outputTextNum > 1_000) {
+      alert(
+        `${outputTextNum}行のテキストが出力されます。処理に時間がかかる可能性があります。`
+      );
+    }
     const serialNumbers = createSequentialTexts(text, { start, stop, step });
     setFormatted(serialNumbers.join(lineBreak));
   }, [text, start, stop, step, lineBreak]);
