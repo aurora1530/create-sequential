@@ -13,9 +13,6 @@ export default function CreateSequential() {
   const [formatted, setFormatted] = useState<string>('');
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if ((e.target.value.match(/%d/g) || []).length > 6) {
-      alert('%dの数が多すぎます。処理に時間がかかる可能性があります。');
-    }
     setText(e.target.value);
     e.target.style.height = 'auto';
     e.target.style.height = e.target.scrollHeight + 'px';
@@ -29,7 +26,7 @@ export default function CreateSequential() {
 
   useEffect(() => {
     const outputTextNum = (text.match(/%d/g)?.length ?? 1) ** ((stop - start) / step + 1);
-    if (outputTextNum > 1_000) {
+    if (outputTextNum > 10_000) {
       alert(
         `${outputTextNum}行のテキストが出力されます。処理に時間がかかる可能性があります。`
       );
@@ -102,15 +99,18 @@ export default function CreateSequential() {
         </select>
       </div>
       <CopyButton text={formatted} />
+      <label htmlFor="formatted" className="block mt-1">
+        生成されたテキスト。負荷軽減のため、100行まで表示可能です。
+      </label>
       <textarea
         ref={textAreaRef}
         readOnly
-        value={formatted}
+        value={formatted.slice(0, 1_100)}
         onChange={(e) => {
           e.target.style.height = 'auto';
           e.target.style.height = e.target.scrollHeight + 'px';
         }}
-        className="mt-4 p-2 border border-gray-300 rounded-md w-full"
+        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
       />
     </>
   );
