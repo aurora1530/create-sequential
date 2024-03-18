@@ -105,7 +105,7 @@ export default function CreateSequential() {
       <textarea
         ref={textAreaRef}
         readOnly
-        value={formatted.slice(0, 100)}
+        value={formatted.split(lineBreak).slice(0, 100).join(lineBreak)}
         onChange={(e) => {
           e.target.style.height = 'auto';
           e.target.style.height = e.target.scrollHeight + 'px';
