@@ -25,7 +25,7 @@ export default function CreateSequential() {
   };
 
   useEffect(() => {
-    const outputTextNum = (text.match(/%d/g)?.length ?? 1) ** ((stop - start) / step + 1);
+    const outputTextNum = ((stop - start) / step + 1) ** (text.match(/%d/g)?.length ?? 1);
     if (outputTextNum > 10_000) {
       alert(
         `${outputTextNum}行のテキストが出力されます。処理に時間がかかる可能性があります。`
