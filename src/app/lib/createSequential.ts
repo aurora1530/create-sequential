@@ -28,15 +28,18 @@ type rangeConf = {
  */
 export const createSequentialTexts = (
   format: string,
+  hasPadding: boolean,
   { start = 1, stop, step = 1 }: rangeConf
 ): string[] => {
   const placeholderCount = (format.match(/%d/g) || []).length;
   const serialNumbers = range(start, stop, step);
+  const maxNumLength = Math.max(...serialNumbers).toString().length;
 
   return serialNumbers.flatMap((num) => {
-    const replacedFirstPart = format.replace(/%d/, num.toString());
+    const padding = hasPadding ? '0'.repeat(maxNumLength - num.toString().length) : '';
+    const replacedFirstPart = format.replace(/%d/, padding + num.toString());
     if (placeholderCount > 1) {
-      return createSequentialTexts(replacedFirstPart, { start, stop, step });
+      return createSequentialTexts(replacedFirstPart, hasPadding, { start, stop, step });
     }
     return replacedFirstPart;
   });
