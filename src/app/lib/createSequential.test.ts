@@ -106,4 +106,27 @@ describe('createSequentialTexts', () => {
     });
     expect(resultWithStepBiggerThanDifference).toEqual(['test-1']);
   });
+
+  it('[start,stop,step].some(isNaN)', () => {
+    const startGivenNaN = createSequentialTexts('test-%d', false, {
+      start: NaN,
+      stop: 5,
+      step: 1,
+    });
+    expect(startGivenNaN).toEqual([]);
+
+    const stopGivenNaN = createSequentialTexts('test-%d', false, {
+      start: 1,
+      stop: NaN,
+      step: 1,
+    });
+    expect(stopGivenNaN).toEqual([]);
+
+    const stepGivenNaN = createSequentialTexts('test-%d', false, {
+      start: 1,
+      stop: 5,
+      step: NaN,
+    });
+    expect(stepGivenNaN).toEqual([]);
+  });
 });
