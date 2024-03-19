@@ -2,7 +2,7 @@ import exp from 'constants';
 import { createSequentialTexts } from './createSequential';
 
 describe('createSequentialTexts', () => {
-  it('連番作成のテスト:%d一個', () => {
+  it('%d一個', () => {
     const resultWithNoPaddingStep1 = createSequentialTexts('test-%d', false, {
       start: 1,
       stop: 5,
@@ -43,7 +43,7 @@ describe('createSequentialTexts', () => {
     ]);
   });
 
-  it('連番作成のテスト:%d複数', () => {
+  it('%d複数', () => {
     const resultWithNoPaddingStep1 = createSequentialTexts('test-%d-%d', false, {
       start: 1,
       stop: 3,
@@ -62,7 +62,7 @@ describe('createSequentialTexts', () => {
     ]);
   });
 
-  it('連番作成のテスト:stepが0', () => {
+  it('stepが0', () => {
     const resultWithStep0 = createSequentialTexts('test-%d', false, {
       start: 1,
       stop: 5,
@@ -71,7 +71,7 @@ describe('createSequentialTexts', () => {
     expect(resultWithStep0).toEqual([]);
   });
 
-  it('連番作成のテスト:startとstopが一致', () => {
+  it('startとstopが一致', () => {
     const resultWithStartAndStopSame = createSequentialTexts('test-%d', false, {
       start: 1,
       stop: 1,
@@ -80,7 +80,7 @@ describe('createSequentialTexts', () => {
     expect(resultWithStartAndStopSame).toEqual(['test-1']);
   });
 
-  it('連番作成のテスト:startがstopより大きく、stepが正', () => {
+  it('startがstopより大きく、stepが正', () => {
     const resultWithStartBiggerThanStop = createSequentialTexts('test-%d', false, {
       start: 5,
       stop: 1,
@@ -89,7 +89,7 @@ describe('createSequentialTexts', () => {
     expect(resultWithStartBiggerThanStop).toEqual([]);
   });
 
-  it('連番作成のテスト:startがstopより小さく、stepが負', () => {
+  it('startがstopより小さく、stepが負', () => {
     const resultWithStartSmallerThanStop = createSequentialTexts('test-%d', false, {
       start: 1,
       stop: 5,
@@ -98,7 +98,7 @@ describe('createSequentialTexts', () => {
     expect(resultWithStartSmallerThanStop).toEqual([]);
   });
 
-  it('連番作成のテスト:startとstopと差をstepが超える', () => {
+  it('startとstopと差をstepが超える', () => {
     const resultWithStepBiggerThanDifference = createSequentialTexts('test-%d', false, {
       start: 1,
       stop: 5,
