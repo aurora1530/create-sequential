@@ -27,11 +27,15 @@ export default function CreateSequential() {
   };
 
   useEffect(() => {
-    const outputTextNum = ((stop - start) / step + 1) ** (text.match(/%d/g)?.length ?? 1);
-    if (outputTextNum > 10_000) {
-      alert(
-        `${outputTextNum}行のテキストが出力されます。処理に時間がかかる可能性があります。`
-      );
+    if (step !== 0) {
+      // stepが0の場合、outputTextNumがInfinityになるが、無視してよい
+      const outputTextNum =
+        ((stop - start) / step + 1) ** (text.match(/%d/g)?.length ?? 1);
+      if (outputTextNum > 10_000) {
+        alert(
+          `${outputTextNum}行のテキストが出力されます。処理に時間がかかる可能性があります。`
+        );
+      }
     }
     const serialNumbers = createSequentialTexts(
       text,
