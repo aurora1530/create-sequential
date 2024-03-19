@@ -61,4 +61,49 @@ describe('createSequentialTexts', () => {
       'test-3-3',
     ]);
   });
+
+  it('連番作成のテスト:stepが0', () => {
+    const resultWithStep0 = createSequentialTexts('test-%d', false, {
+      start: 1,
+      stop: 5,
+      step: 0,
+    });
+    expect(resultWithStep0).toEqual([]);
+  });
+
+  it('連番作成のテスト:startとstopが一致', () => {
+    const resultWithStartAndStopSame = createSequentialTexts('test-%d', false, {
+      start: 1,
+      stop: 1,
+      step: 1,
+    });
+    expect(resultWithStartAndStopSame).toEqual(['test-1']);
+  });
+
+  it('連番作成のテスト:startがstopより大きく、stepが正', () => {
+    const resultWithStartBiggerThanStop = createSequentialTexts('test-%d', false, {
+      start: 5,
+      stop: 1,
+      step: 1,
+    });
+    expect(resultWithStartBiggerThanStop).toEqual([]);
+  });
+
+  it('連番作成のテスト:startがstopより小さく、stepが負', () => {
+    const resultWithStartSmallerThanStop = createSequentialTexts('test-%d', false, {
+      start: 1,
+      stop: 5,
+      step: -1,
+    });
+    expect(resultWithStartSmallerThanStop).toEqual([]);
+  });
+
+  it('連番作成のテスト:startとstopと差をstepが超える', () => {
+    const resultWithStepBiggerThanDifference = createSequentialTexts('test-%d', false, {
+      start: 1,
+      stop: 5,
+      step: 10,
+    });
+    expect(resultWithStepBiggerThanDifference).toEqual(['test-1']);
+  });
 });
