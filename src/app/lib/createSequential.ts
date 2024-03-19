@@ -17,6 +17,8 @@ type rangeConf = {
   step?: number;
 };
 
+type paddingConf = { shouldPad: false } | { shouldPad: true; paddingText: string };
+
 /**
  * @param format format of the serial number. %d is the placeholder for the number.
  * @param start start of the range
@@ -28,7 +30,7 @@ type rangeConf = {
  */
 export const createSequentialTexts = (
   format: string,
-  hasPadding: boolean,
+  paddingConf: paddingConf,
   { start = 1, stop, step = 1 }: rangeConf
 ): string[] => {
   const placeholderCount = (format.match(/%d/g) || []).length;
@@ -36,10 +38,12 @@ export const createSequentialTexts = (
   const maxNumLength = Math.max(...serialNumbers).toString().length;
 
   return serialNumbers.flatMap((num) => {
-    const padding = hasPadding ? '0'.repeat(maxNumLength - num.toString().length) : '';
+    const padding = paddingConf.shouldPad
+      ? paddingConf.paddingText.repeat(maxNumLength - num.toString().length)
+      : '';
     const replacedFirstPart = format.replace(/%d/, padding + num.toString());
     if (placeholderCount > 1) {
-      return createSequentialTexts(replacedFirstPart, hasPadding, { start, stop, step });
+      return createSequentialTexts(replacedFirstPart, paddingConf, { start, stop, step });
     }
     return replacedFirstPart;
   });

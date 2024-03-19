@@ -9,7 +9,8 @@ export default function CreateSequential() {
   const [start, setStart] = useState<number>(1);
   const [stop, setStop] = useState<number>(5);
   const [step, setStep] = useState<number>(1);
-  const [hasPadding, setHasPadding] = useState<boolean>(true);
+  const [shouldPad, setShouldPad] = useState<boolean>(true);
+  const [paddingText, setPaddingText] = useState<string>('0');
   const [lineBreak, setLineBreak] = useState<string>('\n');
   const [formatted, setFormatted] = useState<string>('');
 
@@ -32,9 +33,13 @@ export default function CreateSequential() {
         `${outputTextNum}行のテキストが出力されます。処理に時間がかかる可能性があります。`
       );
     }
-    const serialNumbers = createSequentialTexts(text, hasPadding, { start, stop, step });
+    const serialNumbers = createSequentialTexts(
+      text,
+      { shouldPad, paddingText },
+      { start, stop, step }
+    );
     setFormatted(serialNumbers.join(lineBreak));
-  }, [text, start, stop, step, hasPadding, lineBreak]);
+  }, [text, start, stop, step, shouldPad, paddingText, lineBreak]);
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -87,16 +92,27 @@ export default function CreateSequential() {
           onChange={(e) => setStep(Number(e.target.value))}
           className="p-2 border border-gray-300 rounded-md"
         />
-        <label htmlFor="hasPadding" className="block mt-4">
+        <label htmlFor="shouldPad" className="block mt-4">
           Padding
         </label>
         <input
           type="checkbox"
-          name="hasPadding"
-          id="hasPadding"
-          checked={hasPadding}
-          onChange={(e) => setHasPadding(e.target.checked)}
+          name="shouldPad"
+          id="shouldPad"
+          checked={shouldPad}
+          onChange={(e) => setShouldPad(e.target.checked)}
           className="w-6 h-6 p-2 border border-gray-300 rounded-md"
+        />
+        <label htmlFor="paddingText" className="block mt-4">
+          Padding Text
+        </label>
+        <input
+          type="text"
+          name="paddingText"
+          id="paddingText"
+          value={paddingText}
+          onChange={(e) => setPaddingText(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md"
         />
 
         <label htmlFor="lineBreak" className="block mt-4">

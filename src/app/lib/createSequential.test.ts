@@ -2,11 +2,15 @@ import { createSequentialTexts } from './createSequential';
 
 describe('createSequentialTexts', () => {
   it('%d * 1', () => {
-    const resultWithNoPaddingStep1 = createSequentialTexts('test-%d', false, {
-      start: 1,
-      stop: 5,
-      step: 1,
-    });
+    const resultWithNoPaddingStep1 = createSequentialTexts(
+      'test-%d',
+      { shouldPad: false },
+      {
+        start: 1,
+        stop: 5,
+        step: 1,
+      }
+    );
     expect(resultWithNoPaddingStep1).toEqual([
       'test-1',
       'test-2',
@@ -15,11 +19,15 @@ describe('createSequentialTexts', () => {
       'test-5',
     ]);
 
-    const resultWithPaddingStep2 = createSequentialTexts('test-%d', true, {
-      start: 2,
-      stop: 13,
-      step: 2,
-    });
+    const resultWithPaddingStep2 = createSequentialTexts(
+      'test-%d',
+      { shouldPad: true, paddingText: '0' },
+      {
+        start: 2,
+        stop: 13,
+        step: 2,
+      }
+    );
     expect(resultWithPaddingStep2).toEqual([
       'test-02',
       'test-04',
@@ -29,11 +37,15 @@ describe('createSequentialTexts', () => {
       'test-12',
     ]);
 
-    const resultWithPaddingStepMinus = createSequentialTexts('test-%d', true, {
-      start: 15,
-      stop: 5,
-      step: -3,
-    });
+    const resultWithPaddingStepMinus = createSequentialTexts(
+      'test-%d',
+      { shouldPad: true, paddingText: '0' },
+      {
+        start: 15,
+        stop: 5,
+        step: -3,
+      }
+    );
     expect(resultWithPaddingStepMinus).toEqual([
       'test-15',
       'test-12',
@@ -43,11 +55,15 @@ describe('createSequentialTexts', () => {
   });
 
   it('%d * >= 2', () => {
-    const resultWithNoPaddingStep1 = createSequentialTexts('test-%d-%d', false, {
-      start: 1,
-      stop: 3,
-      step: 1,
-    });
+    const resultWithNoPaddingStep1 = createSequentialTexts(
+      'test-%d-%d',
+      { shouldPad: false },
+      {
+        start: 1,
+        stop: 3,
+        step: 1,
+      }
+    );
     expect(resultWithNoPaddingStep1).toEqual([
       'test-1-1',
       'test-1-2',
@@ -62,70 +78,102 @@ describe('createSequentialTexts', () => {
   });
 
   it('step === 0', () => {
-    const resultWithStep0 = createSequentialTexts('test-%d', false, {
-      start: 1,
-      stop: 5,
-      step: 0,
-    });
+    const resultWithStep0 = createSequentialTexts(
+      'test-%d',
+      { shouldPad: false },
+      {
+        start: 1,
+        stop: 5,
+        step: 0,
+      }
+    );
     expect(resultWithStep0).toEqual([]);
   });
 
   it('start === top', () => {
-    const resultWithStartAndStopSame = createSequentialTexts('test-%d', false, {
-      start: 1,
-      stop: 1,
-      step: 1,
-    });
+    const resultWithStartAndStopSame = createSequentialTexts(
+      'test-%d',
+      { shouldPad: false },
+      {
+        start: 1,
+        stop: 1,
+        step: 1,
+      }
+    );
     expect(resultWithStartAndStopSame).toEqual(['test-1']);
   });
 
   it('start > stop && step > 0', () => {
-    const resultWithStartBiggerThanStop = createSequentialTexts('test-%d', false, {
-      start: 5,
-      stop: 1,
-      step: 1,
-    });
+    const resultWithStartBiggerThanStop = createSequentialTexts(
+      'test-%d',
+      { shouldPad: false },
+      {
+        start: 5,
+        stop: 1,
+        step: 1,
+      }
+    );
     expect(resultWithStartBiggerThanStop).toEqual([]);
   });
 
   it('start < stop && step < 0', () => {
-    const resultWithStartSmallerThanStop = createSequentialTexts('test-%d', false, {
-      start: 1,
-      stop: 5,
-      step: -1,
-    });
+    const resultWithStartSmallerThanStop = createSequentialTexts(
+      'test-%d',
+      { shouldPad: false },
+      {
+        start: 1,
+        stop: 5,
+        step: -1,
+      }
+    );
     expect(resultWithStartSmallerThanStop).toEqual([]);
   });
 
   it('abs(start - stop) < step', () => {
-    const resultWithStepBiggerThanDifference = createSequentialTexts('test-%d', false, {
-      start: 1,
-      stop: 5,
-      step: 10,
-    });
+    const resultWithStepBiggerThanDifference = createSequentialTexts(
+      'test-%d',
+      { shouldPad: false },
+      {
+        start: 1,
+        stop: 5,
+        step: 10,
+      }
+    );
     expect(resultWithStepBiggerThanDifference).toEqual(['test-1']);
   });
 
   it('[start,stop,step].some(isNaN)', () => {
-    const startGivenNaN = createSequentialTexts('test-%d', false, {
-      start: NaN,
-      stop: 5,
-      step: 1,
-    });
+    const startGivenNaN = createSequentialTexts(
+      'test-%d',
+      { shouldPad: false },
+      {
+        start: NaN,
+        stop: 5,
+        step: 1,
+      }
+    );
     expect(startGivenNaN).toEqual([]);
 
-    const stopGivenNaN = createSequentialTexts('test-%d', false, {
-      start: 1,
-      stop: NaN,
-      step: 1,
-    });
+    const stopGivenNaN = createSequentialTexts(
+      'test-%d',
+      { shouldPad: false },
+      {
+        start: 1,
+        stop: NaN,
+        step: 1,
+      }
+    );
     expect(stopGivenNaN).toEqual([]);
 
-    const stepGivenNaN = createSequentialTexts('test-%d', false, {
-      start: 1,
-      stop: 5,
-      step: NaN,
-    });
+    const stepGivenNaN = createSequentialTexts(
+      'test-%d',
+      { shouldPad: false },
+      {
+        start: 1,
+        stop: 5,
+        step: NaN,
+      }
+    );
     expect(stepGivenNaN).toEqual([]);
   });
 });
