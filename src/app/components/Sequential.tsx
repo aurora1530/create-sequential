@@ -50,82 +50,88 @@ export default function CreateSequential() {
 
   return (
     <>
-      <label htmlFor="text" className="block">
-        Text(%dが数字に置き換わります。複数含めることもできます。)
-      </label>
       <div>
+        <label htmlFor="text" className="block">
+          Text(%dが数字に置き換わります。複数含めることもできます。)
+        </label>
         <textarea
           onChange={handleTextChange}
           className="w-full p-2 border border-gray-300 rounded-md"
         />
-        <label htmlFor="start" className="block mt-4">
-          Start
-        </label>
-        <input
-          type="number"
-          name="start"
-          id="start"
-          value={start}
-          onChange={(e) => setStart(Number(e.target.value))}
-          className="flex-shrink p-2 border border-gray-300 rounded-md"
-        />
-        <label htmlFor="stop" className="block mt-4">
-          Stop
-        </label>
-        <input
-          type="number"
-          name="stop"
-          id="stop"
-          value={stop}
-          onChange={(e) => setStop(Number(e.target.value))}
-          className="p-2 border border-gray-300 rounded-md"
-        />
-        <label htmlFor="step" className="block mt-4">
-          Step
-        </label>
-        <input
-          type="number"
-          name="step"
-          id="step"
-          step={1}
-          value={step}
-          onChange={(e) => setStep(Number(e.target.value))}
-          className="p-2 border border-gray-300 rounded-md"
-        />
-        <label htmlFor="shouldPad" className="block mt-4">
-          Padding
-        </label>
-        <input
-          type="checkbox"
-          name="shouldPad"
-          id="shouldPad"
-          checked={shouldPad}
-          onChange={(e) => setShouldPad(e.target.checked)}
-          className="w-6 h-6 p-2 border border-gray-300 rounded-md"
-        />
-        <label htmlFor="paddingText" className="block mt-4">
-          Padding Text
-        </label>
-        <input
-          type="text"
-          name="paddingText"
-          id="paddingText"
-          value={paddingText}
-          onChange={(e) => setPaddingText(e.target.value)}
-          className="p-2 border border-gray-300 rounded-md"
-        />
+        <div className="flex flex-wrap">
+          <div className="flex-grow p-4">
+            <label htmlFor="start" className="block mt-4">
+              Start
+            </label>
+            <input
+              type="number"
+              name="start"
+              id="start"
+              value={start}
+              onChange={(e) => setStart(Number(e.target.value))}
+              className="p-2 border border-gray-300 rounded-md"
+            />
+            <label htmlFor="stop" className="block mt-4">
+              Stop
+            </label>
+            <input
+              type="number"
+              name="stop"
+              id="stop"
+              value={stop}
+              onChange={(e) => setStop(Number(e.target.value))}
+              className="p-2 border border-gray-300 rounded-md"
+            />
+            <label htmlFor="step" className="block mt-4">
+              Step
+            </label>
+            <input
+              type="number"
+              name="step"
+              id="step"
+              step={1}
+              value={step}
+              onChange={(e) => setStep(Number(e.target.value))}
+              className="p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <div className="flex-grow p-4">
+            <label htmlFor="shouldPad" className="block mt-4">
+              Padding
+            </label>
+            <input
+              type="checkbox"
+              name="shouldPad"
+              id="shouldPad"
+              checked={shouldPad}
+              onChange={(e) => setShouldPad(e.target.checked)}
+              className="w-6 h-6 p-2 border border-gray-300 rounded-md"
+            />
+            <label htmlFor="paddingText" className="block mt-4">
+              Padding Text
+            </label>
+            <input
+              type="text"
+              name="paddingText"
+              id="paddingText"
+              value={paddingText}
+              onChange={(e) => setPaddingText(e.target.value)}
+              className="p-2 border border-gray-300 rounded-md"
+            />
 
-        <label htmlFor="lineBreak" className="block mt-4">
-          改行コード（機能していないかも）
-        </label>
-        <select
-          onChange={handleLineBreakChange}
-          className="p-2 border border-gray-300 rounded-md"
-        >
-          <option value="LF">LF</option>
-          <option value="CR">CR</option>
-          <option value="CRLF">CRLF</option>
-        </select>
+            <label htmlFor="lineBreak" className="block mt-4">
+              改行コード（機能していないかも）
+            </label>
+            <select
+              onChange={handleLineBreakChange}
+              className="p-2 border border-gray-300 rounded-md"
+            >
+              <option value="LF">LF</option>
+              <option value="CR">CR</option>
+              <option value="CRLF">CRLF</option>
+            </select>
+          </div>
+        </div>
       </div>
       <CopyButton text={formatted} />
       <label htmlFor="formatted" className="block mt-1">
