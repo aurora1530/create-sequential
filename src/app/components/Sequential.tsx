@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { createSequentialTexts } from '@/app/lib/createSequential';
 import CopyButton from './CopyButton';
+import { useDebouncedCallback } from 'use-debounce';
 
 export default function CreateSequential() {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -26,24 +27,27 @@ export default function CreateSequential() {
     );
   };
 
-  useEffect(() => {
-    if (step !== 0) {
-      // stepが0の場合、outputTextNumがInfinityになるが、無視してよい
-      const outputTextNum =
-        ((stop - start) / step + 1) ** (text.match(/%d/g)?.length ?? 1);
-      if (outputTextNum > 10_000) {
-        alert(
-          `${outputTextNum}行のテキストが出力されます。処理に時間がかかる可能性があります。`
-        );
+  useEffect(
+    useDebouncedCallback(() => {
+      if (step !== 0) {
+        // stepが0の場合、outputTextNumがInfinityになるが、無視してよい
+        const outputTextNum =
+          ((stop - start) / step + 1) ** (text.match(/%d/g)?.length ?? 1);
+        if (outputTextNum > 10_000) {
+          alert(
+            `${outputTextNum}行のテキストが出力されます。処理に時間がかかる可能性があります。`
+          );
+        }
       }
-    }
-    const serialNumbers = createSequentialTexts(
-      text,
-      { shouldPad, paddingText },
-      { start, stop, step }
-    );
-    setFormatted(serialNumbers.join(lineBreak));
-  }, [text, start, stop, step, shouldPad, paddingText, lineBreak]);
+      const serialNumbers = createSequentialTexts(
+        text,
+        { shouldPad, paddingText },
+        { start, stop, step }
+      );
+      setFormatted(serialNumbers.join(lineBreak));
+    }, 200),
+    [text, start, stop, step, shouldPad, paddingText, lineBreak]
+  );
 
   useEffect(() => {
     if (textAreaRef.current) {
